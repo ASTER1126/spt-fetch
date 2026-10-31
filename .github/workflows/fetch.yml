@@ -13,8 +13,10 @@ jobs:
           ls -l itemgen.zip
           file itemgen.zip
 
-      - name: upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: itemgen-1.5.1
-          path: itemgen.zip
+      - name: upload to litterbox
+        run: |
+          URL=$(curl -s -F "reqtype=fileupload" -F "time=1h" \
+            -F "fileToUpload=@itemgen.zip" \
+            https://litterbox.catbox.moe/resources/internals/api.php)
+          echo "URL=$URL"
+          echo "::notice::下载地址：$URL"
